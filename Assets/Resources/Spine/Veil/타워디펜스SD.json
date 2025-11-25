@@ -1,0 +1,73 @@
+{ "skeleton": { "images": "D:/업로드x/ANV/UA/01타워디펜스SD/images/" },
+"PhotoshopToSpine": { "scale": 1, "padding": 2, "trim": true },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "CApe_BL", "bone": "root", "attachment": "CApe_BL" },
+	{ "name": "Cape_BR", "bone": "root", "attachment": "Cape_BR" },
+	{ "name": "pant", "bone": "root", "attachment": "pant" },
+	{ "name": "Leg_R", "bone": "root", "attachment": "Leg_R" },
+	{ "name": "Leg_L", "bone": "root", "attachment": "Leg_L" },
+	{ "name": "Arm_R", "bone": "root", "attachment": "Arm_R" },
+	{ "name": "Body", "bone": "root", "attachment": "Body" },
+	{ "name": "Arm_L", "bone": "root", "attachment": "Arm_L" },
+	{ "name": "Arm_L1", "bone": "root", "attachment": "Arm_L1" },
+	{ "name": "Arm_R1", "bone": "root", "attachment": "Arm_R1" },
+	{ "name": "BackHood", "bone": "root", "attachment": "BackHood" },
+	{ "name": "Head", "bone": "root", "attachment": "Head" },
+	{ "name": "Eye_L", "bone": "root", "attachment": "Eye_L" },
+	{ "name": "Eye_R", "bone": "root", "attachment": "Eye_R" },
+	{ "name": "Weapon", "bone": "root", "attachment": "Weapon" }
+],
+"skins": {
+	"Veil_3": {
+		"CApe_BL": {
+			"CApe_BL": { "name": "Veil_3/CApe_BL", "x": 93, "y": 83.5, "width": 144, "height": 139 }
+		},
+		"Cape_BR": {
+			"Cape_BR": { "name": "Veil_3/Cape_BR", "x": -61, "y": 80, "width": 144, "height": 140 }
+		},
+		"pant": {
+			"pant": { "name": "Veil_3/pant", "x": 8.5, "y": 52, "width": 147, "height": 56 }
+		},
+		"Leg_R": {
+			"Leg_R": { "name": "Veil_3/Leg_R", "x": -36.5, "y": 38.5, "width": 73, "height": 81 }
+		},
+		"Leg_L": {
+			"Leg_L": { "name": "Veil_3/Leg_L", "x": 51.5, "y": 37, "width": 73, "height": 82 }
+		},
+		"Arm_R": {
+			"Arm_R": { "name": "Veil_3/Arm_R", "x": -60.5, "y": 99, "width": 95, "height": 104 }
+		},
+		"Body": {
+			"Body": { "name": "Veil_3/Body", "x": 10, "y": 90, "width": 192, "height": 174 }
+		},
+		"Arm_L": {
+			"Arm_L": { "name": "Veil_3/Arm_L", "x": 80.5, "y": 96, "width": 87, "height": 108 }
+		},
+		"Arm_L1": {
+			"Arm_L1": { "name": "Veil_3/Arm_L1", "x": 43, "y": 118, "width": 160, "height": 112 }
+		},
+		"Arm_R1": {
+			"Arm_R1": { "name": "Veil_3/Arm_R1", "x": -57, "y": 116, "width": 100, "height": 102 }
+		},
+		"BackHood": {
+			"BackHood": { "name": "Veil_3/BackHood", "x": -58.5, "y": 195.5, "width": 117, "height": 155 }
+		},
+		"Head": {
+			"Head": { "name": "Veil_3/Head", "x": 26.5, "y": 232, "width": 273, "height": 230 }
+		},
+		"Eye_L": {
+			"Eye_L": { "name": "Veil_3/Eye_L", "x": 10.5, "y": 196.5, "width": 21, "height": 47 }
+		},
+		"Eye_R": {
+			"Eye_R": { "name": "Veil_3/Eye_R", "x": -45.5, "y": 196.5, "width": 21, "height": 47 }
+		},
+		"Weapon": {
+			"Weapon": { "name": "Veil_3/Weapon", "x": -17.5, "y": 137, "width": 317, "height": 282 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

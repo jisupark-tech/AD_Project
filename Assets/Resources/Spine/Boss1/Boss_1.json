@@ -1,0 +1,81 @@
+{ "skeleton": { "images": "D:/업로드x/ANV/UA/01타워디펜스SD/Boss1/images/" },
+"PhotoshopToSpine": { "scale": 1, "padding": 2, "trim": true },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Arm_R", "bone": "root", "attachment": "Arm_R" },
+	{ "name": "Weapon", "bone": "root", "attachment": "Weapon" },
+	{ "name": "finger2", "bone": "root", "attachment": "finger2" },
+	{ "name": "finger1", "bone": "root", "attachment": "finger1" },
+	{ "name": "Leg_R", "bone": "root", "attachment": "Leg_R" },
+	{ "name": "Body", "bone": "root", "attachment": "Body" },
+	{ "name": "Leg_L", "bone": "root", "attachment": "Leg_L" },
+	{ "name": "pant", "bone": "root", "attachment": "pant" },
+	{ "name": "BornR", "bone": "root", "attachment": "BornR" },
+	{ "name": "Ear_R", "bone": "root", "attachment": "Ear_R" },
+	{ "name": "Head", "bone": "root", "attachment": "Head" },
+	{ "name": "EyeR1", "bone": "root", "attachment": "EyeR1" },
+	{ "name": "EyeL1", "bone": "root", "attachment": "EyeL1" },
+	{ "name": "EyeL2", "bone": "root", "attachment": "EyeL2" },
+	{ "name": "EyeR2", "bone": "root", "attachment": "EyeR2" },
+	{ "name": "Ear_L", "bone": "root", "attachment": "Ear_L" },
+	{ "name": "Arm_L", "bone": "root", "attachment": "Arm_L" },
+],
+"skins": {
+	"Boss_1": {
+		"Arm_R": {
+			"Arm_R": { "name": "Boss_1/Arm_R", "x": -119, "y": 225, "width": 192, "height": 282 }
+		},
+		"Weapon": {
+			"Weapon": { "name": "Boss_1/Weapon", "x": -341, "y": 206, "width": 596, "height": 384 }
+		},
+		"finger2": {
+			"finger2": { "name": "Boss_1/finger2", "x": -128, "y": 110.5, "width": 114, "height": 75 }
+		},
+		"finger1": {
+			"finger1": { "name": "Boss_1/finger1", "x": -140, "y": 159, "width": 56, "height": 48 }
+		},
+		"Leg_R": {
+			"Leg_R": { "name": "Boss_1/Leg_R", "x": -70.5, "y": 92.5, "width": 159, "height": 209 }
+		},
+		"Body": {
+			"Body": { "name": "Boss_1/Body", "x": 78, "y": 243, "width": 472, "height": 346 }
+		},
+		"Leg_L": {
+			"Leg_L": { "name": "Boss_1/Leg_L", "x": 159.5, "y": 81.5, "width": 159, "height": 209 }
+		},
+		"pant": {
+			"pant": { "name": "Boss_1/pant", "x": 32, "y": 110.5, "width": 402, "height": 219 }
+		},
+		"BornR": {
+			"BornR": { "name": "Boss_1/BornR", "x": -32.5, "y": 590, "width": 167, "height": 234 }
+		},
+		"Ear_R": {
+			"Ear_R": { "name": "Boss_1/Ear_R", "x": -144, "y": 465.5, "width": 180, "height": 107 }
+		},
+		"Head": {
+			"Head": { "name": "Boss_1/Head", "x": 63.5, "y": 483, "width": 453, "height": 360 }
+		},
+		"EyeR1": {
+			"EyeR1": { "name": "Boss_1/EyeR1", "x": -66.5, "y": 482.5, "width": 31, "height": 39 }
+		},
+		"EyeL1": {
+			"EyeL1": { "name": "Boss_1/EyeL1", "x": 28, "y": 466, "width": 38, "height": 32 }
+		},
+		"EyeL2": {
+			"EyeL2": { "name": "Boss_1/EyeL2", "x": 24, "y": 463.5, "width": 96, "height": 85 }
+		},
+		"EyeR2": {
+			"EyeR2": { "name": "Boss_1/EyeR2", "x": -76, "y": 479.5, "width": 96, "height": 85 }
+		},
+		"Ear_L": {
+			"Ear_L": { "name": "Boss_1/Ear_L", "x": 211, "y": 438, "width": 180, "height": 106 }
+		},
+		"Arm_L": {
+			"Arm_L": { "name": "Boss_1/Arm_L", "x": 189, "y": 217.5, "width": 178, "height": 251 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

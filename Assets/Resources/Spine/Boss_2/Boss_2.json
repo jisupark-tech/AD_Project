@@ -1,0 +1,63 @@
+{ "skeleton": { "images": "D:/업로드x/ANV/UA/01타워디펜스SD/Boss2/images/" },
+"PhotoshopToSpine": { "scale": 1, "padding": 2, "trim": true },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Body", "bone": "root", "attachment": "Body" },
+	{ "name": "Mushroom_1", "bone": "root", "attachment": "Mushroom_1" },
+	{ "name": "Mushroom_2", "bone": "root", "attachment": "Mushroom_2" },
+	{ "name": "stone", "bone": "root", "attachment": "stone" },
+	{ "name": "stone2", "bone": "root", "attachment": "stone2" },
+	{ "name": "leaf_1", "bone": "root", "attachment": "leaf_1" },
+	{ "name": "leaf_2", "bone": "root", "attachment": "leaf_2" },
+	{ "name": "leaf_3", "bone": "root", "attachment": "leaf_3" },
+	{ "name": "leaf_4", "bone": "root", "attachment": "leaf_4" },
+	{ "name": "leaf_5", "bone": "root", "attachment": "leaf_5" },
+	{ "name": "EyeL", "bone": "root", "attachment": "EyeL1" },
+	{ "name": "EyeR", "bone": "root", "attachment": "EyeR1" }
+],
+"skins": {
+	"default": {
+		"Body": {
+			"Body": { "x": 15, "y": 319, "width": 676, "height": 648 }
+		},
+		"Mushroom_1": {
+			"Mushroom_1": { "x": -61.5, "y": 536, "width": 181, "height": 194 }
+		},
+		"Mushroom_2": {
+			"Mushroom_2": { "x": 210, "y": 460.5, "width": 146, "height": 159 }
+		},
+		"stone": {
+			"stone": { "x": -335.5, "y": 110, "width": 193, "height": 160 }
+		},
+		"stone2": {
+			"stone2": { "x": -160.5, "y": 14, "width": 133, "height": 104 }
+		},
+		"leaf_1": {
+			"leaf_1": { "x": 199, "y": 358, "width": 58, "height": 94 }
+		},
+		"leaf_2": {
+			"leaf_2": { "x": 164.5, "y": 376, "width": 57, "height": 112 }
+		},
+		"leaf_3": {
+			"leaf_3": { "x": -31, "y": 434, "width": 64, "height": 88 }
+		},
+		"leaf_4": {
+			"leaf_4": { "x": 24, "y": 465.5, "width": 98, "height": 59 }
+		},
+		"leaf_5": {
+			"leaf_5": { "x": -83.5, "y": 425.5, "width": 77, "height": 93 }
+		},
+		"EyeL": {
+			"EyeL2": { "x": 106.5, "y": 192.5, "width": 141, "height": 129 },
+			"EyeL1": { "x": 104, "y": 195, "width": 128, "height": 120 }
+		},
+		"EyeR": {
+			"EyeR2": { "x": -83, "y": 195.5, "width": 134, "height": 131 },
+			"EyeR1": { "x": -80, "y": 195, "width": 128, "height": 120 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
