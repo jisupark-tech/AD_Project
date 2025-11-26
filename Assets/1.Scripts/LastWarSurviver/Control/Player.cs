@@ -105,7 +105,14 @@ public class Player : MonoBehaviour
                 else
                 {
                     // 자식 캐릭터인 경우 FirePoint 찾기
+                    // 먼저 직접적인 FirePoint 컴포넌트나 자식 오브젝트 찾기
                     characterFirePoint = character.Find("FirePoint");
+
+                    // FirePoint가 없으면 캐릭터 자체의 transform 사용
+                    if (characterFirePoint == null)
+                    {
+                        characterFirePoint = character;
+                    }
                 }
 
                 if (characterFirePoint != null)
@@ -117,11 +124,10 @@ public class Player : MonoBehaviour
                     if (bullet != null)
                     {
                         bullet.transform.position = characterFirePoint.position;
-                        bullet.transform.rotation = characterFirePoint.rotation;
+                        //bullet.transform.rotation = characterFirePoint.rotation;
                         bullet.GetComponent<Bullet>().damage = attackPower;
                         bullet.SetActive(true);
                     }
-                  
                 }
             }
         }
@@ -141,11 +147,13 @@ public class Player : MonoBehaviour
 
         GameObject newCharacter;
 
-        for(int i= 0; i < _cnt; i++)
+        for (int i = 0; i < _cnt; i++)
         {
             if (characterPrefab != null)
             {
                 newCharacter = Instantiate(characterPrefab, transform);
+                // 피라미드 모양을 위한 각도 설정
+                newCharacter.transform.localEulerAngles = new Vector3(60, 0, 0);
             }
             else
             {
@@ -159,7 +167,7 @@ public class Player : MonoBehaviour
 
             StartCoroutine(CharacterSpawnEffect(newCharacter.transform));
         }
-        UPdatePlayerCharacter();
+        UpdateIncreasePlayerCharacter();
         UpdateCharacterFormation();
         UpdateUI();
     }
@@ -173,15 +181,13 @@ public class Player : MonoBehaviour
         // Player 오브젝트의 자식으로 설정
         character.transform.SetParent(transform);
         character.transform.localPosition = Vector3.zero;
+        character.transform.eulerAngles = new Vector3(60, 0, 0);
 
         // 색상 설정
         Renderer renderer = character.GetComponent<Renderer>();
         renderer.material.color = Color.blue;
 
-        // Fire Point 생성
-        GameObject firePointObj = new GameObject("FirePoint");
-        firePointObj.transform.SetParent(character.transform);
-        firePointObj.transform.localPosition = new Vector3(0, 0.5f, 0.5f);
+        // FirePoint는 characterPrefab에 이미 포함되어 있으므로 별도 생성하지 않음
 
         // Collider를 Trigger로 설정
         Collider collider = character.GetComponent<Collider>();
@@ -223,7 +229,7 @@ public class Player : MonoBehaviour
         int characterCount = characters.Count;
         if (characterCount <= 1) return;
 
-        // 둘러싸는 배치 시스템
+        // 피라미드 배치 시스템
         List<Vector3> positions = GetFormationPositions(characterCount);
 
         for (int i = 0; i < characterCount; i++)
@@ -237,7 +243,7 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-                    // 자식 캐릭터들을 둘러싸는 위치에 배치
+                    // 자식 캐릭터들을 피라미드 위치에 배치
                     int positionIndex = i - 1; // 메인 플레이어 제외
                     if (positionIndex < positions.Count)
                     {
@@ -253,93 +259,142 @@ public class Player : MonoBehaviour
         List<Vector3> positions = new List<Vector3>();
         int extraCharacters = totalCount - 1; // 메인 플레이어 제외
 
-        switch (extraCharacters)
+        if (extraCharacters <= 0)
         {
-            case 0:
-                // 메인 플레이어만 있음
-                break;
+            return positions;
+        }
 
-            case 1:
-                // 1명 추가: 오른쪽
-                positions.Add(new Vector3(characterSpacing, 0, 0));
-                break;
+        // 피라미드 형태로 배치
+        int charactersPlaced = 0;
+        int currentRow = 1; // 첫 번째 추가 캐릭터부터 시작 (1번째 줄)
 
-            case 2:
-                // 2명 추가: 좌우
-                positions.Add(new Vector3(-characterSpacing, 0, 0));
-                positions.Add(new Vector3(characterSpacing, 0, 0));
-                break;
+        while (charactersPlaced < extraCharacters)
+        {
+            int charactersInThisRow = currentRow; // 1번째 줄: 1개, 2번째 줄: 2개, 3번째 줄: 3개...
+            int charactersToPlace = Mathf.Min(charactersInThisRow, extraCharacters - charactersPlaced);
 
-            case 3:
-                // 3명 추가: 좌우 + 뒤
-                positions.Add(new Vector3(-characterSpacing, 0, 0));
-                positions.Add(new Vector3(characterSpacing, 0, 0));
-                positions.Add(new Vector3(0, 0, -characterSpacing));
-                break;
+            // 각 줄의 Z 위치 (앞쪽으로 배치)
+            float rowZ = characterSpacing * currentRow;
 
-            case 4:
-                // 4명 추가: 사방향
-                positions.Add(new Vector3(-characterSpacing, 0, 0));     // 왼쪽
-                positions.Add(new Vector3(characterSpacing, 0, 0));      // 오른쪽
-                positions.Add(new Vector3(0, 0, characterSpacing));      // 앞
-                positions.Add(new Vector3(0, 0, -characterSpacing));     // 뒤
-                break;
+            // 각 줄에서 캐릭터들의 X 위치 계산
+            for (int i = 0; i < charactersToPlace; i++)
+            {
+                float x;
 
-            case 5:
-                // 5명 추가: 사방향 + 대각선 1개
-                positions.Add(new Vector3(-characterSpacing, 0, 0));
-                positions.Add(new Vector3(characterSpacing, 0, 0));
-                positions.Add(new Vector3(0, 0, characterSpacing));
-                positions.Add(new Vector3(0, 0, -characterSpacing));
-                positions.Add(new Vector3(-characterSpacing * 0.7f, 0, characterSpacing * 0.7f));
-                break;
-
-            case 6:
-                // 6명 추가: 사방향 + 대각선 2개
-                positions.Add(new Vector3(-characterSpacing, 0, 0));
-                positions.Add(new Vector3(characterSpacing, 0, 0));
-                positions.Add(new Vector3(0, 0, characterSpacing));
-                positions.Add(new Vector3(0, 0, -characterSpacing));
-                positions.Add(new Vector3(-characterSpacing * 0.7f, 0, characterSpacing * 0.7f));
-                positions.Add(new Vector3(characterSpacing * 0.7f, 0, characterSpacing * 0.7f));
-                break;
-
-            case 7:
-                // 7명 추가: 사방향 + 대각선 3개
-                positions.Add(new Vector3(-characterSpacing, 0, 0));
-                positions.Add(new Vector3(characterSpacing, 0, 0));
-                positions.Add(new Vector3(0, 0, characterSpacing));
-                positions.Add(new Vector3(0, 0, -characterSpacing));
-                positions.Add(new Vector3(-characterSpacing * 0.7f, 0, characterSpacing * 0.7f));
-                positions.Add(new Vector3(characterSpacing * 0.7f, 0, characterSpacing * 0.7f));
-                positions.Add(new Vector3(-characterSpacing * 0.7f, 0, -characterSpacing * 0.7f));
-                break;
-
-            default:
-                // 8명 이상: 원형 배치
-                float radius = characterSpacing * 1.2f;
-                for (int i = 0; i < extraCharacters; i++)
+                if (charactersToPlace == 1)
                 {
-                    float angle = (360f / extraCharacters) * i * Mathf.Deg2Rad;
-                    float x = Mathf.Cos(angle) * radius;
-                    float z = Mathf.Sin(angle) * radius;
-                    positions.Add(new Vector3(x, 0, z));
+                    // 한 개일 때는 중앙에
+                    x = 0f;
                 }
-                break;
+                else
+                {
+                    // 여러 개일 때는 균등하게 분배
+                    float totalWidth = (charactersToPlace - 1) * characterSpacing;
+                    x = -totalWidth / 2f + i * characterSpacing;
+                }
+
+                positions.Add(new Vector3(x, 0, -rowZ));
+                charactersPlaced++;
+
+                if (charactersPlaced >= extraCharacters)
+                    break;
+            }
+
+            currentRow++;
         }
 
         return positions;
     }
 
+    public void RemoveCharacter(int _cnt)
+    {
+        // 메인 플레이어는 제거하지 않으므로 최소 1개는 유지
+        int charactersToRemove = Mathf.Min(_cnt, characters.Count - 1);
+
+        if (charactersToRemove <= 0) return;
+
+        Debug.Log($"캐릭터 {charactersToRemove}개 제거 시작. 현재 캐릭터 수: {characters.Count}");
+
+        // 뒤에서부터 제거 (메인 플레이어는 첫 번째이므로 보호됨)
+        for (int i = 0; i < charactersToRemove; i++)
+        {
+            if (characters.Count > 1) // 메인 플레이어만 남을 때까지
+            {
+                int lastIndex = characters.Count - 1;
+                Transform characterToRemove = characters[lastIndex];
+
+                if (characterToRemove != transform) // 메인 플레이어가 아닌지 확인
+                {
+                    // 캐릭터 제거 효과
+                    StartCoroutine(CharacterRemoveEffect(characterToRemove));
+
+                    // 리스트에서 제거
+                    characters.RemoveAt(lastIndex);
+                    if (character_Skins.Count > lastIndex && character_Skins[lastIndex] != null)
+                    {
+                        character_Skins.RemoveAt(lastIndex);
+                    }
+
+                    Debug.Log($"캐릭터 제거됨. 남은 캐릭터 수: {characters.Count}");
+                }
+            }
+        }
+
+        UpdateCharacterFormation();
+        UpdateUI();
+    }
+
+    IEnumerator CharacterRemoveEffect(Transform character)
+    {
+        if (character == null) yield break;
+
+        Vector3 originalScale = character.localScale;
+        float duration = 0.5f;
+        float elapsedTime = 0f;
+
+        // 크기를 줄여가며 제거 효과
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            character.localScale = Vector3.Lerp(originalScale, Vector3.zero, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 완전히 제거
+        if (character != null && character.gameObject != null)
+        {
+            DestroyImmediate(character.gameObject);
+        }
+    }
+
     public void OnItemCollected(int _val)
     {
-        AddCharacter(_val);
+        if (_val > 0)
+        {
+            AddCharacter(_val);
+        }
+        else if (_val < 0)
+        {
+            RemoveCharacter(Mathf.Abs(_val)); // 절댓값으로 변환하여 제거
+        }
+        // _val이 0이면 아무것도 하지 않음
     }
 
     public void UPdatePlayerCharacter()
     {
         m_PlayerLevel++;
-        foreach(SkeletonAnimation _anim in character_Skins)
+        foreach (SkeletonAnimation _anim in character_Skins)
+        {
+            _anim.skeleton.SetSkin($"Veil_{m_PlayerLevel}");
+            _anim.Skeleton.SetSlotsToSetupPose();
+            _anim.AnimationState.Apply(_anim.Skeleton);
+        };
+    }
+
+    public void UpdateIncreasePlayerCharacter()
+    {
+        foreach (SkeletonAnimation _anim in character_Skins)
         {
             _anim.skeleton.SetSkin($"Veil_{m_PlayerLevel}");
             _anim.Skeleton.SetSlotsToSetupPose();

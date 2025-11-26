@@ -276,11 +276,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpItem
   itemType: 0
-  baseValue: -5
+  baseValue: -3
   currentValue: 0
   itemSpeed: 7
+  timeMultiple: 3
   hitTimeout: 0.3
   valueText: {fileID: 4160266331722240653}
+  valueBacks:
+  - {fileID: 21300000, guid: db94f097a60a64d4fbe8405ab8880fa1, type: 3}
+  - {fileID: 21300000, guid: 4fd74a79e87fab94fbbe109b2f252bbd, type: 3}
+  curSpriteRender: {fileID: 3348277805987777937}
 --- !u!54 &3241251894032871166
 Rigidbody:
   m_ObjectHideFlags: 0

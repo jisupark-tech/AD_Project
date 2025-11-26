@@ -19,12 +19,15 @@ public class PowerUpItem : MonoBehaviour
     public int baseValue = -5;      // 초기 마이너스 값
     public int currentValue;        // 현재 값 (총알에 맞아서 증가)
     public float itemSpeed = 5f;
+    public float timeMultiple = 2f;
 
     [Header("Hit Detection Settings")]
     public float hitTimeout = 0.3f; // 총알이 끊어졌다고 판단하는 시간
 
     [Header("UI")]
     public TextMeshPro valueText;
+    public Sprite[] valueBacks = new Sprite[2];
+    public SpriteRenderer curSpriteRender;
 
     private float destroyY = -6f;
     private bool isMoving = true;
@@ -96,7 +99,7 @@ public class PowerUpItem : MonoBehaviour
             return;
 
         // 마지막 히트 시간 업데이트
-        lastHitTime = Time.time;
+        lastHitTime = Time.time * timeMultiple;
 
         // 처음 맞는 경우에만 값 증가 시작
         if (!isBeingHit)
@@ -106,7 +109,7 @@ public class PowerUpItem : MonoBehaviour
         }
 
         // 히트 이펙트
-        StartCoroutine(HitEffect());
+        //StartCoroutine(HitEffect());
     }
 
     IEnumerator HitEffect()
@@ -124,12 +127,17 @@ public class PowerUpItem : MonoBehaviour
         while (isBeingHit)
         {
             // 1초 대기
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f / timeMultiple);
 
             // 여전히 맞고 있는지 확인 (Update에서 체크하므로 이중 확인)
             if (isBeingHit)
             {
                 currentValue++;
+
+                if (curSpriteRender != null)
+                {
+                    curSpriteRender.sprite = currentValue < 0 ? valueBacks[0] : valueBacks[1];
+                }
                 SetItemAppearance();
                 Debug.Log($"값 증가! 현재 값: {currentValue}");
             }
@@ -193,19 +201,26 @@ public class PowerUpItem : MonoBehaviour
                 player = FindObjectOfType<Player>();
             }
 
-            if (player != null && currentValue > 0) // 양수일 때만 효과 적용
+            if (player != null)
             {
-                ApplyEffect(player);
-                player.OnItemCollected(currentValue);
+                if (currentValue > 0) // 양수일 때 - 일반적인 효과 적용
+                {
+                    ApplyEffect(player);
+                    player.OnItemCollected(currentValue);
+                    ShowFloatingText($"Success! +{currentValue}", Color.green);
+                }
+                else if (currentValue < 0) // 음수일 때 - 캐릭터 제거
+                {
+                    player.OnItemCollected(currentValue); // 마이너스 값 전달
+                    ShowFloatingText($"Friends Lost! {currentValue}", Color.red);
+                    Debug.Log($"마이너스 아이템 효과: 캐릭터 {Mathf.Abs(currentValue)}개 제거");
+                }
+                else // 0일 때 - 효과 없음
+                {
+                    ShowFloatingText("No Effect!", Color.gray);
+                }
+
                 isMoving = false; // 이동 정지
-                ResetHitState(); // 히트 상태 정리
-                gameObject.SetActive(false);
-            }
-            else if (currentValue <= 0)
-            {
-                // 음수나 0이면 효과 없음
-                ShowFloatingText("No Effect!", Color.gray);
-                isMoving = false;
                 ResetHitState(); // 히트 상태 정리
                 gameObject.SetActive(false);
             }

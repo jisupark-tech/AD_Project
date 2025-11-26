@@ -310,7 +310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4509829460817795394}
   - component: {fileID: 2730233383594936421}
-  - component: {fileID: 386558431115530471}
+  - component: {fileID: 5794301927428425107}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Monster
@@ -351,16 +351,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Monster
   monsterType: 1
   moveSpeed: 5
-  maxHealth: 20
+  maxHealth: 3
   scoreValue: 10
-  bossMaxHealth: 50
+  bossMaxHealth: 10
   bossScoreValue: 100
   monsterBody:
   - {fileID: 5098540663107328014}
   - {fileID: 69240056387575950}
   TxtHP: {fileID: 1206697410740181778}
---- !u!136 &386558431115530471
-CapsuleCollider:
+--- !u!65 &5794301927428425107
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -377,11 +377,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.15, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 10, y: 10, z: 8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5098540663107328014
 GameObject:
   m_ObjectHideFlags: 0

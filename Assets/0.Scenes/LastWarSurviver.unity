@@ -248,13 +248,13 @@ MonoBehaviour:
     size: 1000
   - tag: Bullet_1
     prefab: {fileID: 2932186057711402094, guid: 8e082945c0718f04c90eb20c3955e2ee, type: 3}
-    size: 200
+    size: 2000
   - tag: Bullet_2
     prefab: {fileID: 2932186057711402094, guid: d6be13281258cca4689dacba822f0948, type: 3}
-    size: 200
+    size: 2000
   - tag: Bullet_3
     prefab: {fileID: 2932186057711402094, guid: 2e48a09deed7827418176c6fad118f1f, type: 3}
-    size: 200
+    size: 2000
   - tag: Item
     prefab: {fileID: 5928510355846165677, guid: 7358eb74b806aa843b27c3bff5b568e7, type: 3}
     size: 100
@@ -2252,9 +2252,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1199094139757338657, guid: a366ca529e228bf45bee81f0a92c880a, type: 3}
+      propertyPath: maxCharacters
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199094139757338657, guid: a366ca529e228bf45bee81f0a92c880a, type: 3}
       propertyPath: characterPrefab
       value: 
       objectReference: {fileID: 1722418309}
+    - target: {fileID: 1199094139757338657, guid: a366ca529e228bf45bee81f0a92c880a, type: 3}
+      propertyPath: characterSpacing
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 1837517593815791607, guid: a366ca529e228bf45bee81f0a92c880a, type: 3}
       propertyPath: m_Mesh
       value: 
