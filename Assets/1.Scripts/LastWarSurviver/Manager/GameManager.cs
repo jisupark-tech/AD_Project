@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [Header("몬스터 설정")]
     public float monsterSpawnRate = 2f;
     public int monsterWayCnt = 1;
-    public Transform[] monsterSpawnPoint;
+    public Transform monsterSpawnPoint;
     public Transform centerSpawnPoint; // 보스 몬스터용 중앙 스폰 포인트
 
     [Header("아이템 설정")]
@@ -106,17 +106,16 @@ public class GameManager : MonoBehaviour
 
         if (monsterSpawnTimer >= monsterSpawnRate)
         {
-            for (int j = 0; j < monsterSpawnPoint.Length; j++)
+
+            GameObject monster = ObjectPool.Instance.GetPooledObject("Monster");
+            if (monster != null)
             {
-                GameObject monster = ObjectPool.Instance.GetPooledObject("Monster");
-                if (monster != null)
-                {
-                    monster.transform.position = monsterSpawnPoint[j].position;
-                    Monster monsterScript = monster.GetComponent<Monster>();
-                    monsterScript.SetMonsterType(MonsterType.Normal);
-                    monster.SetActive(true);
-                }
+                monster.transform.position = monsterSpawnPoint.position;
+                Monster monsterScript = monster.GetComponent<Monster>();
+                monsterScript.SetMonsterType(MonsterType.Normal, monsterWayCnt);
+                monster.SetActive(true);
             }
+            
             monsterSpawnTimer = 0f;
         }
         

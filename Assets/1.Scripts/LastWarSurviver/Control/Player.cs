@@ -159,6 +159,7 @@ public class Player : MonoBehaviour
 
             StartCoroutine(CharacterSpawnEffect(newCharacter.transform));
         }
+        UPdatePlayerCharacter();
         UpdateCharacterFormation();
         UpdateUI();
     }

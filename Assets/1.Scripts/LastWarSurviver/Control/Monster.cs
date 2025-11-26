@@ -4,7 +4,7 @@ using TMPro;
 public enum MonsterType
 {
     Normal = 0,
-    Boss =1,
+    Boss = 1,
 }
 
 public class Monster : MonoBehaviour
@@ -58,16 +58,63 @@ public class Monster : MonoBehaviour
     {
         int _index = (int)_type;
         SkeletonAnimation _anim = monsterBody[_index].GetComponent<SkeletonAnimation>();
-        if(_anim!=null)
+        if (_anim != null)
         {
             _anim.AnimationName = _animName;
             _anim.loop = true;
         }
     }
-    public void SetMonsterType(MonsterType type)
+
+    public void SetMonsterType(MonsterType type, int _cnt = 1)
     {
         monsterType = type;
         SetupMonster();
+
+        // _cnt가 1보다 크면 추가 몬스터들을 가로로 소환
+        if (_cnt > 1)
+        {
+            SpawnAdditionalMonsters(_cnt - 1);
+        }
+    }
+
+    void SpawnAdditionalMonsters(int additionalCount)
+    {
+        float spacing = 2f; // 몬스터 간의 간격
+
+        // 현재 활성화된 몬스터 타입에 따른 원본 몬스터 바디 선택
+        int currentTypeIndex = (int)monsterType;
+        GameObject originalBody = monsterBody[currentTypeIndex];
+
+        for (int i = 0; i < additionalCount; i++)
+        {
+            // 원본 몬스터 바디를 복제하여 자식으로 생성
+            GameObject additionalMonsterBody = Instantiate(originalBody, transform);
+            if (additionalMonsterBody != null)
+            {
+                // 가로로 배치 (좌우로 번갈아가며)
+                float offsetX = (i % 2 == 0) ? spacing * ((i + 2) / 2) : -spacing * ((i + 1) / 2);
+                Vector3 localPosition = new Vector3(offsetX, 0, 0);
+                additionalMonsterBody.transform.localPosition = localPosition;
+
+                // 복제된 몬스터 바디의 애니메이션 설정
+                SkeletonAnimation clonedAnim = additionalMonsterBody.GetComponent<SkeletonAnimation>();
+                if (clonedAnim != null)
+                {
+                    clonedAnim.AnimationName = "move";
+                    clonedAnim.loop = true;
+                }
+
+                // 복제된 몬스터 바디가 충돌하지 않도록 Collider 제거 또는 비활성화
+                Collider clonedCollider = additionalMonsterBody.GetComponent<Collider>();
+                if (clonedCollider != null)
+                {
+                    clonedCollider.enabled = false;
+                }
+
+                // 복제된 몬스터 바디에 태그 설정 (시각적 효과만을 위한 것임을 표시)
+                additionalMonsterBody.tag = "MonsterVisual";
+            }
+        }
     }
 
     void Update()
@@ -89,7 +136,7 @@ public class Monster : MonoBehaviour
 
         currentHealth -= damage;
 
-        if(TxtHP!=null)
+        if (TxtHP != null)
         {
             TxtHP.text = currentHealth.ToString();
         }
@@ -97,7 +144,7 @@ public class Monster : MonoBehaviour
         StartCoroutine(FlashRed());
 
         GameObject _effect = ObjectPool.Instance.GetPooledObject("Effect_2");
-        if(_effect!=null)
+        if (_effect != null)
         {
             _effect.transform.position = this.transform.position;
             _effect.SetActive(true);
