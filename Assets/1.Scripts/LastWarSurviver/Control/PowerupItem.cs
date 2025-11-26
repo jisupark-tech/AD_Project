@@ -66,7 +66,7 @@ public class PowerUpItem : MonoBehaviour
         {
             // 총알이 끊어짐
             StopValueIncrease();
-            Debug.Log($"총알 히트 중단됨. 최종 값: {currentValue}");
+            Debug.Log($"Update에서 총알 히트 중단됨. 최종 값: {currentValue} (마지막 히트: {Time.time - lastHitTime:F2}초 전)");
         }
 
         // 화면 밖으로 나가면 제거
@@ -98,8 +98,8 @@ public class PowerUpItem : MonoBehaviour
         if (this.gameObject.activeSelf == false)
             return;
 
-        // 마지막 히트 시간 업데이트
-        lastHitTime = Time.time * timeMultiple;
+        // 마지막 히트 시간 업데이트 (timeMultiple 제거)
+        lastHitTime = Time.time;
 
         // 처음 맞는 경우에만 값 증가 시작
         if (!isBeingHit)
@@ -126,10 +126,19 @@ public class PowerUpItem : MonoBehaviour
     {
         while (isBeingHit)
         {
-            // 1초 대기
+            // 1초 대기 (timeMultiple 적용)
             yield return new WaitForSeconds(1f / timeMultiple);
 
-            // 여전히 맞고 있는지 확인 (Update에서 체크하므로 이중 확인)
+            // 마지막 히트 시간 체크 - 총알이 끊어졌는지 확인
+            if (Time.time - lastHitTime > hitTimeout)
+            {
+                // 총알이 끊어졌으므로 증가 중단
+                Debug.Log($"코루틴에서 총알 히트 중단 감지. 최종 값: {currentValue}");
+                StopValueIncrease();
+                break;
+            }
+
+            // 여전히 맞고 있는지 확인
             if (isBeingHit)
             {
                 currentValue++;
@@ -139,7 +148,7 @@ public class PowerUpItem : MonoBehaviour
                     curSpriteRender.sprite = currentValue < 0 ? valueBacks[0] : valueBacks[1];
                 }
                 SetItemAppearance();
-                Debug.Log($"값 증가! 현재 값: {currentValue}");
+                Debug.Log($"값 증가! 현재 값: {currentValue} (마지막 히트: {Time.time - lastHitTime:F2}초 전)");
             }
         }
     }
